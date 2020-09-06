@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import FeatherIcon from 'react-native-vector-icons/Feather';
+import React, { useState, useEffect } from "react";
+import FeatherIcon from "react-native-vector-icons/Feather";
 
-import { View, Image } from 'react-native';
+import { View, Image } from "react-native";
 
-import formatValue from '../../utils/formatValue';
-import { useCart } from '../../hooks/cart';
-import api from '../../services/api';
+import formatValue from "../../utils/formatValue";
+import { useCart } from "../../hooks/cart";
+import api from "../../services/api";
 
-import FloatingCart from '../../components/FloatingCart';
+import FloatingCart from "../../components/FloatingCart";
 
 import {
   Container,
@@ -19,7 +19,7 @@ import {
   PriceContainer,
   ProductPrice,
   ProductButton,
-} from './styles';
+} from "./styles";
 
 interface Product {
   id: string;
@@ -35,7 +35,9 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     async function loadProducts(): Promise<void> {
-      // TODO
+      const response = await api.get("/products");
+
+      setProducts(response.data);
     }
 
     loadProducts();
@@ -43,6 +45,7 @@ const Dashboard: React.FC = () => {
 
   function handleAddToCart(item: Product): void {
     // TODO
+    addToCart(item);
   }
 
   return (
@@ -50,7 +53,7 @@ const Dashboard: React.FC = () => {
       <ProductContainer>
         <ProductList
           data={products}
-          keyExtractor={item => item.id}
+          keyExtractor={(item) => item.id}
           ListFooterComponent={<View />}
           ListFooterComponentStyle={{
             height: 80,
